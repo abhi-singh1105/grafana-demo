@@ -1,0 +1,43 @@
+prometheus.scrape "demo" {
+  targets = [{ __address__ = "app:5000" }]
+  forward_to = [prometheus.remote_write.demo.receiver]
+}
+
+prometheus.remote_write "demo" {
+  endpoint {
+    url = "https://prometheus-blocks-prod-us-central-0.grafana.net/api/prom/push"
+    basic_auth {
+      username = "<METRICS_USER>"
+      password = "<API_KEY>"
+    }
+  }
+}
+
+loki.source.docker "demo" {
+  docker_path = "/var/lib/docker/containers"
+  forward_to = [loki.write.demo.receiver]
+}
+
+loki.write "demo" {
+  endpoint {
+    url = "https://logs-prod3.grafana.net/loki/api/v1/push"
+    basic_auth {
+      username = "<LOGS_USER>"
+      password = "<API_KEY>"
+    }
+  }
+}
+
+otelcol.receiver.otlp "default" {
+  protocols = { http = { endpoint = "0.0.0.0:4318" } }
+  output = [otelcol.exporter.otlp.default.input]
+}
+
+otelcol.exporter.otlp "default" {
+  client {
+    endpoint = "https://tempo-prod-us-central-0.grafana.net:443"
+    headers = {
+      "Authorization" = "Bearer <API_KEY>"
+    }
+  }
+}
