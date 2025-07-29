@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: demo-app
+    ports:
+      - "8080:5000"
+    networks:
+      - observability
+    labels:
+      - "logging=true"
+
+  alloy:
+    image: grafana/alloy:latest
+    container_name: grafana-alloy
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./alloy-config.alloy:/etc/alloy/config.alloy
+    networks:
+      - observability
+    ports:
+      - "4318:4318"
+
+networks:
+  observability:
+    driver: bridge
