@@ -5,39 +5,36 @@ prometheus.scrape "demo" {
 
 prometheus.remote_write "demo" {
   endpoint {
-    url = "https://prometheus-blocks-prod-us-central-0.grafana.net/api/prom/push"
+    url = "https://prometheus-prod-24-prod-eu-west-2.grafana.net"
     basic_auth {
-      username = "<METRICS_USER>"
-      password = "<API_KEY>"
+      username= "2589479"
+      password= "glc_eyJvIjoiMTQ5NTkzNSIsIm4iOiJzdGFjay0xMzMyNjIxLWludGVncmF0aW9uLWdyYWZhbmF0ZXN0LWdyYWZhbmF0ZXN0IiwiayI6IlFoeTRvRzU1Q1M1aTdkMjdtMjBZQk41ZCIsIm0iOnsiciI6InByb2QtZXUtd2VzdC0yIn19"
     }
   }
 }
 
 loki.source.docker "demo" {
-  docker_path = "/var/lib/docker/containers"
+  host = "unix:///var/run/docker.sock"
+  targets = [{
+    __path__ = "/var/lib/docker/containers/*/*.log",
+  }]
   forward_to = [loki.write.demo.receiver]
 }
 
 loki.write "demo" {
   endpoint {
-    url = "https://logs-prod3.grafana.net/loki/api/v1/push"
+    url = "https://logs-prod-012.grafana.net"
     basic_auth {
-      username = "<LOGS_USER>"
-      password = "<API_KEY>"
+      username= "1290416"
+      password= "glc_eyJvIjoiMTQ5NTkzNSIsIm4iOiJzdGFjay0xMzMyNjIxLWludGVncmF0aW9uLWdyYWZhbmF0ZXN0LWdyYWZhbmF0ZXN0IiwiayI6IlFoeTRvRzU1Q1M1aTdkMjdtMjBZQk41ZCIsIm0iOnsiciI6InByb2QtZXUtd2VzdC0yIn19"
     }
   }
 }
 
-otelcol.receiver.otlp "default" {
-  protocols = { http = { endpoint = "0.0.0.0:4318" } }
-  output = [otelcol.exporter.otlp.default.input]
-}
-
 otelcol.exporter.otlp "default" {
   client {
-    endpoint = "https://tempo-prod-us-central-0.grafana.net:443"
+    endpoint = "https://tempo-prod-10-prod-eu-west-2.grafana.net:443/v1/traces"
     headers = {
-      "Authorization" = "Bearer <API_KEY>"
-    }
+      "Authorization" = "Bearer glc_eyJvIjoiMTQ5NTkzNSIsIm4iOiJzdGFjay0xMzMyNjIxLWludGVncmF0aW9uLWdyYWZhbmF0ZXN0LWdyYWZhbmF0ZXN0IiwiayI6IlFoeTRvRzU1Q1M1aTdkMjdtMjBZQk41ZCIsIm0iOnsiciI6InByb2QtZXUtd2VzdC0yIn19"    }
   }
 }
