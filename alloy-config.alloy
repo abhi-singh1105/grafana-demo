@@ -5,7 +5,7 @@ prometheus.scrape "demo" {
 
 prometheus.remote_write "demo" {
   endpoint {
-    url = "https://prometheus-prod-24-prod-eu-west-2.grafana.net"
+    url = "https://prometheus-prod-24-prod-eu-west-2.grafana.net/api/prom/push"
     basic_auth {
       username= "2589479"
       password= "glc_eyJvIjoiMTQ5NTkzNSIsIm4iOiJzdGFjay0xMzMyNjIxLWludGVncmF0aW9uLWdyYWZhbmF0ZXN0LWdyYWZhbmF0ZXN0IiwiayI6IlFoeTRvRzU1Q1M1aTdkMjdtMjBZQk41ZCIsIm0iOnsiciI6InByb2QtZXUtd2VzdC0yIn19"
@@ -23,18 +23,10 @@ loki.source.docker "demo" {
 
 loki.write "demo" {
   endpoint {
-    url = "https://logs-prod-012.grafana.net"
+    url = "https://logs-prod-012.grafana.net/loki/api/v1/push"
     basic_auth {
       username= "1290416"
       password= "glc_eyJvIjoiMTQ5NTkzNSIsIm4iOiJzdGFjay0xMzMyNjIxLWludGVncmF0aW9uLWdyYWZhbmF0ZXN0LWdyYWZhbmF0ZXN0IiwiayI6IlFoeTRvRzU1Q1M1aTdkMjdtMjBZQk41ZCIsIm0iOnsiciI6InByb2QtZXUtd2VzdC0yIn19"
     }
-  }
-}
-
-otelcol.exporter.otlp "default" {
-  client {
-    endpoint = "https://tempo-prod-10-prod-eu-west-2.grafana.net:443/v1/traces"
-    headers = {
-      "Authorization" = "Bearer glc_eyJvIjoiMTQ5NTkzNSIsIm4iOiJzdGFjay0xMzMyNjIxLWludGVncmF0aW9uLWdyYWZhbmF0ZXN0LWdyYWZhbmF0ZXN0IiwiayI6IlFoeTRvRzU1Q1M1aTdkMjdtMjBZQk41ZCIsIm0iOnsiciI6InByb2QtZXUtd2VzdC0yIn19"    }
   }
 }

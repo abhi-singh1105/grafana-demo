@@ -10,7 +10,9 @@ services:
       - observability
     labels:
       - "logging=true"
-
+    environment:
+      - GRAFANA_CLOUD_USERNAME="1332621"
+      - GRAFANA_CLOUD_API_KEY=glc_eyJvIjoiMTQ5NTkzNSIsIm4iOiJzdGFjay0xMzMyNjIxLWludGVncmF0aW9uLXRlc3RvdGxwLXRlc3RvdGxwIiwiayI6Inc4N0NUdldFOUtSVTR6OThpVHYwNFE5NCIsIm0iOnsiciI6InByb2QtZXUtd2VzdC0yIn19
   alloy:
     image: grafana/alloy:latest
     container_name: grafana-alloy
@@ -21,6 +23,7 @@ services:
       - observability
     ports:
       - "4318:4318"
+      - "4317:4317"
 
 networks:
   observability:
