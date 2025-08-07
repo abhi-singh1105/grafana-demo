@@ -6,15 +6,9 @@ This project demonstrates the use of Grafana for data visualization and monitori
 
 ```
 grafana-demo/
-├── dashboards/
-│   └── sample-dashboard.json
 ├── docker-compose.yml
 ├── grafana/
 │   └── provisioning/
-│       ├── datasources/
-│       │   └── datasource.yml
-│       └── dashboards/
-│           └── dashboard.yml
 ├── README.md
 ```
 
